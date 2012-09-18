@@ -13,6 +13,7 @@ class Mldonkey < Formula
   if build.include? "with-x"
     depends_on 'librsvg'
     depends_on 'lablgtk'
+    depends_on :x11
   end
 
   def install

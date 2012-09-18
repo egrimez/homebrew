@@ -17,11 +17,16 @@ class Libharu < Formula
   end
 
   def install
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          # libpng doesn't get picked up
-                          "--with-png=#{MacOS::X11.prefix}"
+    args = %W[--disable-debug
+              --disable-dependency-tracking
+              --prefix=#{prefix}
+    ]
+
+    if MacOS.version <= 10.7 || MacOS::X11.installed?
+      args << "--with-png=#{MacOS::X11.prefix}"
+    end
+
+    system "./configure", *args
     system "make install"
   end
 end
