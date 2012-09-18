@@ -6,6 +6,7 @@ class Xdotool < Formula
   sha1 'bf8372b2e76e8ee3884763cee6e8b3f66bf29aa6'
 
   depends_on 'pkg-config' => :build
+  depends_on :x11
 
   def install
     system "make", "PREFIX=#{prefix}", "INSTALLMAN=#{man}", "install"
