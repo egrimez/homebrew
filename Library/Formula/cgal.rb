@@ -12,7 +12,7 @@ class Cgal < Formula
   depends_on 'gmp'
   depends_on 'mpfr'
 
-  depends_on 'qt' if build.include? 'imaging'
+  depends_on 'qt' if build.imaging?
 
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
