@@ -40,7 +40,7 @@ class Ffmpeg < Formula
   depends_on 'libvo-aacenc' => :optional
   depends_on 'libass' => :optional
   depends_on 'openjpeg' => :optional
-  depends_on 'sdl' if build.include? 'with-ffplay'
+  depends_on 'sdl' if build.with_ffplay?
   depends_on 'speex' => :optional
   depends_on 'schroedinger' => :optional
   depends_on 'fdk-aac' => :optional
@@ -61,28 +61,28 @@ class Ffmpeg < Formula
             "--host-ldflags=#{ENV.ldflags}"
            ]
 
-    args << "--enable-libx264" if build.with? 'x264'
-    args << "--enable-libfaac" if build.with? 'faac'
-    args << "--enable-libmp3lame" if build.with? 'lame'
-    args << "--enable-libxvid" if build.with? 'xvid'
+    args << "--enable-libx264" if build.with_x264?
+    args << "--enable-libfaac" if build.with_faac?
+    args << "--enable-libmp3lame" if build.with_lame?
+    args << "--enable-libxvid" if build.with_xvid?
 
-    args << "--enable-libfreetype" if build.with? 'freetype'
-    args << "--enable-libtheora" if build.with? 'theora'
-    args << "--enable-libvorbis" if build.with? 'libvorbis'
-    args << "--enable-libvpx" if build.with? 'libvpx'
-    args << "--enable-librtmp" if build.with? 'rtmpdump'
-    args << "--enable-libopencore-amrnb" << "--enable-libopencore-amrwb" if build.with? 'opencore-amr'
-    args << "--enable-libvo-aacenc" if build.with? 'libvo-aacenc'
-    args << "--enable-libass" if build.with? 'libass'
-    args << "--enable-ffplay" if build.include? 'with-ffplay'
-    args << "--enable-libspeex" if build.with? 'speex'
-    args << '--enable-libschroedinger' if build.with? 'schroedinger'
-    args << "--enable-libfdk-aac" if build.with? 'fdk-aac'
-    args << "--enable-openssl" if build.with? 'openssl'
-    args << "--enable-libopus" if build.with? 'opus'
-    args << "--enable-frei0r" if build.with? 'frei0r'
+    args << "--enable-libfreetype" if build.with_freetype?
+    args << "--enable-libtheora" if build.with_theora?
+    args << "--enable-libvorbis" if build.with_libvorbis?
+    args << "--enable-libvpx" if build.with_libvpx?
+    args << "--enable-librtmp" if build.with_rtmpdump?
+    args << "--enable-libopencore-amrnb" << "--enable-libopencore-amrwb" if build.with_opencore_amr?
+    args << "--enable-libvo-aacenc" if build.with_libvo_aacenc?
+    args << "--enable-libass" if build.with_libass?
+    args << "--enable-ffplay" if build.with_ffplay?
+    args << "--enable-libspeex" if build.with_speex?
+    args << '--enable-libschroedinger' if build.with_schroedinger?
+    args << "--enable-libfdk-aac" if build.with_fdk_aac?
+    args << "--enable-openssl" if build.with_openssl?
+    args << "--enable-libopus" if build.with_opus?
+    args << "--enable-frei0r" if build.with_frei0r?
 
-    if build.with? 'openjpeg'
+    if build.with_openjpeg?
       args << '--enable-libopenjpeg'
       args << '--extra-cflags=' + %x[pkg-config --cflags libopenjpeg].chomp
     end
@@ -104,7 +104,7 @@ class Ffmpeg < Formula
 
     system "make install"
 
-    if build.include? 'with-tools'
+    if build.with_tools?
       system "make alltools"
       bin.install Dir['tools/*'].select {|f| File.executable? f}
     end
