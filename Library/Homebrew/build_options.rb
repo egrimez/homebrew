@@ -85,4 +85,12 @@ class BuildOptions
   def unused_options
     Options.new(@options - @args)
   end
+
+  # Maps options to methods; e.g. these are the same:
+  # build.include? 'enable-foo' => build.enable_foo?
+  # build.with? 'foo' => build.with_foo?
+  def method_missing name
+    option_name = name.to_s.gsub("_","-").chomp("?")
+    with?(option_name.gsub("with-","")) || include?(option_name)
+  end
 end
