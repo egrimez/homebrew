@@ -12,7 +12,7 @@ class CctoolsHeaders < Formula
   url 'http://www.opensource.apple.com/tarballs/cctools/cctools-836.tar.gz'
   sha1 'fe2aab3f527adf6c775462ac045699a150dc7f82'
 
-  keg_only :provided_by_osx
+  keg_only :not_provided_by_osx
 
   def install
     # only supports DSTROOT, not PREFIX

@@ -144,6 +144,12 @@ class KegOnlyReason
 
       #{@explanation}
       EOS
+    when :not_provided_by_osx then <<-EOS.undent
+      This package includes private Mac OS X development tools and/or headers
+      which are not included with the system.
+
+      #{@explanation}
+    EOS
     else
       @reason
     end.strip

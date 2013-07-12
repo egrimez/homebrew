@@ -5,7 +5,7 @@ class DyldHeaders < Formula
   url 'http://opensource.apple.com/tarballs/dyld/dyld-210.2.3.tar.gz'
   sha1 'fd1c6b6e08d0bb8a4682ffb705f5921d10bdbd64'
 
-  keg_only :provided_by_osx
+  keg_only :not_provided_by_osx
 
   # Use Tiger-style availability macros
   def patches; DATA; end if MacOS.version < :leopard

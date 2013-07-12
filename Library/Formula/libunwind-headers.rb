@@ -5,8 +5,7 @@ class LibunwindHeaders < Formula
   url 'http://opensource.apple.com/tarballs/libunwind/libunwind-35.1.tar.gz'
   sha1 '86908428aaa0ae6cec5038dc6eeb8b64dbb6cd63'
 
-  keg_only :provided_by_osx,
-    "This package includes official development headers not installed by Apple."
+  keg_only :not_provided_by_osx
 
   def install
     inreplace "include/libunwind.h", "__MAC_10_6", "__MAC_NA" if MacOS.version < :snow_leopard
