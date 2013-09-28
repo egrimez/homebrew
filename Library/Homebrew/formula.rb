@@ -815,6 +815,45 @@ class Formula
       @cc_failures << CompilerFailure.new(compiler, &block)
     end
 
+    # The opposite of fails_with: marks a requirement on a given
+    # standard, and automatically registers failures for the
+    # compilers that don't support it.
+    # Currently supported:
+    #   * :cxx11
+    #   * :openmp
+    def fails_without standard
+      case standard
+      when :cxx11
+        [:gcc, :gcc_4_0, :llvm].each do |cc|
+          fails_with cc do
+            cause 'This formula requires a C++11-compatible compiler.'
+          end
+
+          fails_with :clang do
+            build 421
+            cause 'This formula requires C++11 support available in clang build 421 or newer.'
+          end
+
+          (3..7).each do |v|
+            fails_with "gcc-4.#{v}" do
+              cause 'This formula requires C++11 support, which is available in GCC 4.8 or newer.'
+            end
+          end
+        end
+      when :openmp
+        [:clang, :gcc, :gcc_4_0, :llvm].each do |cc|
+          fails_with cc do
+            cause 'This formula requires an OpenMP-compatible compiler.'
+          end
+        end
+      else
+        raise ArgumentError.new <<-EOS.undent
+        Unrecognized standard: #{standard}
+        Recognized values are: :cxx11, :openmp
+        EOS
+      end
+    end
+
     def require_universal_deps
       specs.each { |spec| spec.build.universal = true }
     end
